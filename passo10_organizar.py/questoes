@@ -1,0 +1,37 @@
+import os
+import shutil
+
+# Pasta onde estão as imagens geradas no Passo 9
+PASTA_ORIGEM = "./questoes_finais"
+
+# Nova pasta final exigida pelo Passo 10
+PASTA_FINAL = "./questoes"
+os.makedirs(PASTA_FINAL, exist_ok=True)
+
+def organizar_pasta_final():
+    print("Iniciando o Passo 10 - Organizando todas as questões em uma só pasta...\n")
+    
+    if not os.path.exists(PASTA_ORIGEM):
+        print(f"Erro: A pasta {PASTA_ORIGEM} não existe. Execute o Passo 9 primeiro.")
+        return
+
+    # Lista todas as imagens .png da pasta de saída do Passo 9
+    arquivos = [f for f in os.listdir(PASTA_ORIGEM) if f.endswith('.png')]
+    
+    if not arquivos:
+        print("Nenhuma imagem encontrada para mover.")
+        return
+
+    # Move cada arquivo para a nova pasta 'questoes'
+    for arquivo in arquivos:
+        origem = os.path.join(PASTA_ORIGEM, arquivo)
+        destino = os.path.join(PASTA_FINAL, arquivo)
+        
+        # Usamos move para transferir, ou copy2 se preferir manter o backup em questoes_finais
+        shutil.move(origem, destino)
+        print(f"Movido: {arquivo} -> {PASTA_FINAL}/")
+
+    print(f"\nSucesso absoluto! Todas as {len(arquivos)} questões foram unificadas em: {PASTA_FINAL}")
+
+if __name__ == "__main__":
+    organizar_pasta_final()
